@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -std=c11
+CFLAGS = -g -Wall -Wextra -Werror -std=c11
 GCOVFLAGS = -fprofile-arcs -ftest-coverage
 ADDFLAGS = -lcheck -lsubunit -lm -lrt -pthread
 
@@ -56,7 +56,7 @@ test: s21_string.a tests/s21_test.c
 
 valgrind_test: s21_string.a tests/s21_test.c
 	gcc $(CFLAGS) tests/s21_test.c s21_string.a -o test.out $(ADDFLAGS)
-	valgrind --tool=memcheck --leak-check=yes ./test.out
+	valgrind --tool=memcheck --leak-check=yes --track-origins=yes ./test.out
 
 gcov_report: tests/s21_test.c s21_string.a
 	gcc $(GCOVFLAGS) tests/s21_test.c $(SOURCES) -o ./tests/report.out $(ADDFLAGS)
